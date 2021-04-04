@@ -8,11 +8,11 @@ import TableList from './components/tableList';
 const App = () => {
   const [list, setList] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
-  const [sortBy, setSortBy] = useState(false);
+  const [sortBy, setSortBy] = useState(true);
   const [editId, setEditId] = useState('');
 
   const handleAddTodo = (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     const title = document.getElementById('title').value;
     const description = document.getElementById('description').value;
     store.dispatch({
@@ -30,7 +30,7 @@ const App = () => {
 
   const handleEditTodo = (e) => {
     setIsEdit(false);
-    // e.preventDefault();
+    e.preventDefault();
     const title = document.getElementById('title').value;
     const description = document.getElementById('description').value;
     const updatedList = list.map((e) => {
@@ -90,7 +90,6 @@ const App = () => {
       case 'All': setList(store.getState().todoList.requiredTodoList); break;
       case 'Completed': {
         const reqlist = store.getState().todoList.requiredTodoList.filter(e => e.status);
-        console.log('reqList', reqlist);
         setList(reqlist);
         break;
       }
@@ -117,7 +116,6 @@ const App = () => {
       reqList = uncompletedList.concat(completedList);
       setSortBy(true);
     }
-    console.log('reqList', reqList);
     setList(reqList);
   };
 
@@ -127,7 +125,7 @@ const App = () => {
         <div className="d-flex justify-content-center fs-18 fw-600 mt-2">
           {LABEL.TODO_LIST}
         </div>
-        <form name="myForm" className="card p-2">
+        <form name="myForm" className="card p-2" onSubmit={(e) => !isEdit ? handleAddTodo(e) : handleEditTodo(e)}>
           <div className="col-12 row p-2">
             <div className="col-4 justify-content-center items-align-center">Title:</div>
             <div className="col-8 form-group">
@@ -141,17 +139,17 @@ const App = () => {
             </div>
           </div>
           <div className="row justify-content-center mt-2">
-          <button className="col-4 btn btn-primary" type="submit" onClick={(e) => !isEdit ? handleAddTodo(e) : handleEditTodo(e)}>
-            {isEdit ? LABEL.ADD : LABEL.UPDATE}
+          <button className="col-4 btn btn-primary" type="submit">
+            {!isEdit ? LABEL.ADD : LABEL.UPDATE}
           </button>
         </div>
         </form>
       </div>
       {!isEdit && (
         <select className="col-4 form-control mt-2" onClick={e => handleTable(e.target.value)}>
-          <option>All</option>
-          <option>Completed</option>
-          <option>Not Completed</option>
+          <option>{LABEL.ALL}</option>
+          <option>{LABEL.COMPLETED}</option>
+          <option>{LABEL.NOT_COMPLETED}</option>
         </select>
       )}
       {!isEdit && <TableList list={list} handleDelete={handleDelete} handleStatus={handleStatus} handleEdit={handleEdit} handleArraySort={handleArraySort} />}
