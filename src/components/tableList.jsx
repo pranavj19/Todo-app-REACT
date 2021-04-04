@@ -11,6 +11,7 @@ const tableList = ({
           <thead className="thead-dark">
             <tr>
               <th scope="col" style={{ cursor: 'pointer' }}><div role="presentation" onClick={() => handleArraySort()}>Status</div></th>
+              <th>Status Type</th>
               <th scope="col">Title</th>
               <th scope="col">Description</th>
               <th scope="col">Edit</th>
@@ -27,6 +28,9 @@ const tableList = ({
                       checked={e.status}
                       onClick={(d) => handleStatus(d.target.checked, e.id)}
                     />
+                  </td>
+                  <td>
+                    {e.status ? 'Completed' : 'In Progress'}
                   </td>
                   <td>{e.title}</td>
                   <td>{e.description}</td>

@@ -4,5 +4,5 @@ export default {
     ADD: 'Add',
     ALL: 'All',
     COMPLETED: 'Completed',
-    NOT_COMPLETED: 'Not Completed',
+    ACTIVE: 'Active',
   };

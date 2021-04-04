@@ -26,6 +26,7 @@ const App = () => {
     document.getElementById('title').value = '';
     document.getElementById('description').value = '';
     setList(store.getState().todoList.requiredTodoList);
+    document.getElementById('dropdownOption').value = 'All';
   };
 
   const handleEditTodo = (e) => {
@@ -93,7 +94,7 @@ const App = () => {
         setList(reqlist);
         break;
       }
-      case 'Not Completed': {
+      case 'Active': {
         const reqlist = store.getState().todoList.requiredTodoList.filter(e => !e.status);
         setList(reqlist);
         break;
@@ -146,10 +147,10 @@ const App = () => {
         </form>
       </div>
       {!isEdit && (
-        <select className="col-4 form-control mt-2" onClick={e => handleTable(e.target.value)}>
+        <select className="col-4 form-control mt-2" onClick={e => handleTable(e.target.value)} id="dropdownOption">
           <option>{LABEL.ALL}</option>
           <option>{LABEL.COMPLETED}</option>
-          <option>{LABEL.NOT_COMPLETED}</option>
+          <option>{LABEL.ACTIVE}</option>
         </select>
       )}
       {!isEdit && <TableList list={list} handleDelete={handleDelete} handleStatus={handleStatus} handleEdit={handleEdit} handleArraySort={handleArraySort} />}
